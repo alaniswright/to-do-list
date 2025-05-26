@@ -1,3 +1,6 @@
+# Route which defines a URL path users can access relating to tasks
+# Defines functions users can access via method (post, put and delete requests) to specific paths (URLS)
+
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from app import models, schemas
 from sqlalchemy.orm import Session
@@ -20,6 +23,18 @@ def create_task(post: schemas.TaskCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_task)
     return new_task
+
+@router.get("")
+def get_tasks(db: Session = Depends(get_db)):
+    tasks = db.query(models.Task).all()
+    return tasks
+
+@router.get("/{id}")
+def get_task(id: int, db: Session = Depends(get_db)):
+    task = db.query(models.Task).filter(models.Task.id == id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return task
 
 
 

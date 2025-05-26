@@ -1,7 +1,5 @@
-# This module defines the SQLAlchemy ORM model for the 'tasks' table.
-# The Task class maps to the 'tasks' table with fields for id, title,
-# completion status, creation time, and completion time.
-# It uses SQLAlchemy types and constraints to define the schema.
+# Defines the structure of database tables.
+# Uses SQLAlchemy to map Python classes (e.g., Task) to database tables.
 
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.sql.expression import text
